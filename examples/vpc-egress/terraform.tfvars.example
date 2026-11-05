@@ -1,0 +1,11 @@
+project_id                = "acme-corp-infra"
+region                    = "us-central1"
+sentinel_version          = "0.1.0"
+billing_account_id        = "012345-6789AB-CDEF01"
+monthly_budget_amount_usd = 250.0
+default_tenant_id         = "acme-core"
+default_webhook_secret    = "sec_replace_with_a_secure_random_string_32_chars"
+
+# Connect Sentinel to your internal staging VPC network:
+vpc_network_name    = "projects/acme-corp-infra/global/networks/staging-vpc"
+vpc_subnetwork_name = "projects/acme-corp-infra/regions/us-central1/subnetworks/staging-private-subnet"
