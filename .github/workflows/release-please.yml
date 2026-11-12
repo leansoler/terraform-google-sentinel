@@ -1,0 +1,63 @@
+name: Release Please & Terraform Validation
+
+# ==============================================================================
+# Sentinel Terraform Registry Module — Automated Changelog & Release Pipeline
+# ==============================================================================
+# 1. Validates Terraform formatting (`terraform fmt -check -recursive`) and
+#    module configuration (`terraform validate`) on pushes and pull requests.
+# 2. Runs Google Release Please (`googleapis/release-please-action@v4`) on
+#    pushes to `main` to maintain a live Release PR updating `CHANGELOG.md` and
+#    bumping `sentinel_version` defaults across `variables.tf`, `examples/*`,
+#    and `README.md`.
+# 3. Merging the Release PR automatically creates the `vX.Y.Z` Git tag and
+#    GitHub Release, which the HashiCorp Terraform Registry (`leansoler/sentinel/google`)
+#    automatically ingests to publish the new module version.
+# ==============================================================================
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  validate-terraform:
+    name: Validate Terraform Module
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~1.9.0"
+
+      - name: Verify Terraform Formatting
+        run: terraform fmt -check -recursive
+
+      - name: Initialize & Validate Root Module
+        run: |
+          terraform init -backend=false
+          terraform validate
+
+  release-please:
+    name: Release Please (Changelog & Release PR)
+    needs: validate-terraform
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Google Release Please
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json

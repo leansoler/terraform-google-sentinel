@@ -12,7 +12,7 @@ variable "region" {
 variable "sentinel_version" {
   description = "Sentinel release version (automatically selects matching Artifact Registry images)."
   type        = string
-  default     = "0.1.0"
+  default     = "0.1.0" # x-release-please-version
 }
 
 variable "monthly_budget_amount_usd" {

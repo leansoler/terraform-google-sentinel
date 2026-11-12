@@ -1,6 +1,6 @@
 project_id                = "acme-corp-infra"
 region                    = "us-central1"
-sentinel_version          = "0.1.0"
+sentinel_version          = "0.1.0" # x-release-please-version
 billing_account_id        = "012345-6789AB-CDEF01"
 monthly_budget_amount_usd = 250.0
 default_tenant_id         = "acme-core"
