@@ -62,11 +62,11 @@ Create a `main.tf` in your infrastructure repository. Only `project_id` is requi
 ```hcl
 module "sentinel" {
   source  = "leansoler/sentinel/google"
-  version = "~> 0.1"
+  version = "~> 0.2"
 
   project_id                = "acme-sentinel-prod"
   region                    = "us-central1"
-  sentinel_version          = "0.1.0" # x-release-please-version
+  sentinel_version          = "0.2.0" # x-release-please-version
   monthly_budget_amount_usd = 100.0
   default_webhook_secret    = var.sentinel_webhook_secret
 }
@@ -94,7 +94,7 @@ module "sentinel" {
 
   project_id                = "acme-corp-infra"
   region                    = "us-central1"
-  sentinel_version          = "0.1.0" # x-release-please-version
+  sentinel_version          = "0.2.0" # x-release-please-version
   billing_account_id        = "012345-6789AB-CDEF01"
   monthly_budget_amount_usd = 250.0
   default_webhook_secret    = var.sentinel_webhook_secret

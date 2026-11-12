@@ -1,6 +1,6 @@
 project_id                = "your-customer-gcp-project"
 region                    = "us-central1"
-sentinel_version          = "0.1.0" # x-release-please-version
+sentinel_version          = "0.2.0" # x-release-please-version
 monthly_budget_amount_usd = 100.0
 default_webhook_secret    = "sec_replace_with_a_secure_random_string_32_chars"
 enable_dashboard          = true

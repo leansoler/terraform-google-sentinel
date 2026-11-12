@@ -12,7 +12,7 @@ variable "region" {
 variable "sentinel_version" {
   description = "Sentinel release version."
   type        = string
-  default     = "0.1.0" # x-release-please-version
+  default     = "0.2.0" # x-release-please-version
 }
 
 variable "billing_account_id" {

@@ -40,7 +40,7 @@ variable "monthly_budget_amount_usd" {
 variable "sentinel_version" {
   description = "Sentinel release version string (e.g. 0.1.0). Automatically determines default Artifact Registry image tags when control_plane_image or agent_runner_image are omitted."
   type        = string
-  default     = "0.1.0" # x-release-please-version
+  default     = "0.2.0" # x-release-please-version
 }
 
 variable "control_plane_image" {
