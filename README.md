@@ -66,7 +66,7 @@ module "sentinel" {
 
   project_id                = "acme-sentinel-prod"
   region                    = "us-central1"
-  sentinel_version          = "0.1.0"
+  sentinel_version          = "0.1.0" # x-release-please-version
   monthly_budget_amount_usd = 100.0
   default_webhook_secret    = var.sentinel_webhook_secret
 }
@@ -94,7 +94,7 @@ module "sentinel" {
 
   project_id                = "acme-corp-infra"
   region                    = "us-central1"
-  sentinel_version          = "0.1.0"
+  sentinel_version          = "0.1.0" # x-release-please-version
   billing_account_id        = "012345-6789AB-CDEF01"
   monthly_budget_amount_usd = 250.0
   default_webhook_secret    = var.sentinel_webhook_secret
@@ -149,3 +149,9 @@ module "sentinel" {
 | `sentinel_version` | Sentinel component release version deployed in this environment. |
 | `control_plane_image` | Resolved container image URI deployed for the Sentinel Control Plane service. |
 | `agent_runner_image` | Resolved container image URI deployed for the Sentinel Agent Runner job. |
+
+---
+
+## Changelog & Releases
+
+See [`CHANGELOG.md`](./CHANGELOG.md) for the automated release history of this Terraform module, or browse the [GitHub Releases](https://github.com/leansoler/terraform-google-sentinel/releases).
