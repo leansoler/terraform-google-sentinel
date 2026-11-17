@@ -3,6 +3,7 @@
 [![Terraform Registry](https://img.shields.io/badge/terraform-registry-623CE4?logo=terraform)](https://registry.terraform.io/modules/leansoler/sentinel/google)
 [![Terraform Version](https://img.shields.io/badge/terraform-%3E%3D%201.5.0-623CE4?logo=terraform)](https://www.terraform.io)
 [![Google Provider](https://img.shields.io/badge/provider-hashicorp%2Fgoogle%20%3E%3D%206.0-4285F4?logo=googlecloud)](https://registry.terraform.io/providers/hashicorp/google/latest)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Official Terraform module for deploying **Sentinel** (`@sentinel/*`) — the cloud-native, 100% automated post-merge black-box QA platform — directly inside a **Customer-Hosted Google Cloud Platform (GCP) Bring-Your-Own-Cloud (BYOC)** perimeter.
 
@@ -155,3 +156,9 @@ module "sentinel" {
 ## Changelog & Releases
 
 See [`CHANGELOG.md`](./CHANGELOG.md) for the automated release history of this Terraform module, or browse the [GitHub Releases](https://github.com/leansoler/terraform-google-sentinel/releases).
+
+---
+
+## License
+
+Distributed under the Apache License 2.0. See [LICENSE](LICENSE) for details.
