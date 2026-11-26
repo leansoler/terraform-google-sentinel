@@ -34,7 +34,7 @@ This module provisions:
 
 ## Pre-Flight Prerequisite: Artifact Registry Reader Access
 
-Sentinel distributes official, cryptographically signed container images from its central Google Artifact Registry (`us-central1-docker.pkg.dev/sentinel-release/sentinel/...`).
+Sentinel distributes official, cryptographically signed container images from its central Google Artifact Registry (`us-central1-docker.pkg.dev/sentinel-saas-prod/sentinel/...`).
 
 Before running `terraform apply`, ensure your customer GCP project's **Cloud Run Service Agent** and **Compute Engine Default Service Account** have been granted `roles/artifactregistry.reader` by Sentinel:
 

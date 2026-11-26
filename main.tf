@@ -21,12 +21,12 @@ locals {
   # Default container images to Sentinel's official Google Artifact Registry when not overridden
   effective_control_plane_image = coalesce(
     var.control_plane_image,
-    "us-central1-docker.pkg.dev/sentinel-release/sentinel/control-plane:v${local.normalized_sentinel_version}"
+    "us-central1-docker.pkg.dev/sentinel-saas-prod/sentinel/control-plane:v${local.normalized_sentinel_version}"
   )
 
   effective_agent_runner_image = coalesce(
     var.agent_runner_image,
-    "us-central1-docker.pkg.dev/sentinel-release/sentinel/agent-runner:v${local.normalized_sentinel_version}"
+    "us-central1-docker.pkg.dev/sentinel-saas-prod/sentinel/agent-runner:v${local.normalized_sentinel_version}"
   )
 
   required_gcp_services = [
@@ -35,7 +35,8 @@ locals {
     "secretmanager.googleapis.com",
     "aiplatform.googleapis.com",
     "pubsub.googleapis.com",
-    "cloudbilling.googleapis.com"
+    "cloudbilling.googleapis.com",
+    "billingbudgets.googleapis.com"
   ]
 }
 
@@ -102,12 +103,11 @@ resource "google_project_iam_member" "control_plane_aiplatform" {
 }
 
 # Allow Control Plane to execute Cloud Run Jobs as the Agent Runner identity
-resource "google_service_account_iam_binding" "control_plane_acts_as_agent_runner" {
+# Uses additive iam_member (never authoritative iam_binding) so external CI/CD deployer actAs grants are preserved.
+resource "google_service_account_iam_member" "control_plane_acts_as_agent_runner" {
   service_account_id = google_service_account.agent_runner_sa.name
   role               = "roles/iam.serviceAccountUser"
-  members = [
-    "serviceAccount:${google_service_account.control_plane_sa.email}",
-  ]
+  member             = "serviceAccount:${google_service_account.control_plane_sa.email}"
 }
 
 # Agent Runner permissions:
@@ -289,6 +289,11 @@ resource "google_cloud_run_v2_service" "control_plane" {
       }
 
       env {
+        name  = "SENTINEL_AGENT_RUNNER_IMAGE"
+        value = local.effective_agent_runner_image
+      }
+
+      env {
         name  = "ENABLE_DASHBOARD"
         value = var.enable_dashboard ? "true" : "false"
       }
@@ -331,6 +336,13 @@ resource "google_cloud_run_v2_service" "control_plane" {
       template[0].containers[0].image,
     ]
   }
+
+  depends_on = [
+    google_firestore_database.default,
+    google_project_iam_member.control_plane_datastore,
+    google_project_iam_member.control_plane_secrets,
+    google_secret_manager_secret_version.webhook_signing_secret_v1,
+  ]
 }
 
 # Allow public or unauthenticated invocations for Webhook ingress
@@ -437,7 +449,7 @@ resource "google_pubsub_topic_iam_member" "billing_pubsub_publisher" {
   project = var.project_id
   topic   = google_pubsub_topic.budget_alerts.name
   role    = "roles/pubsub.publisher"
-  member  = "serviceAccount:cloud-billing-pubsub@system.gserviceaccount.com"
+  member  = "serviceAccount:billing-budget-alert@system.gserviceaccount.com"
 
   depends_on = [google_pubsub_topic.budget_alerts]
 }

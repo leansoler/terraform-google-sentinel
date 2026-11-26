@@ -44,7 +44,7 @@ variable "sentinel_version" {
 }
 
 variable "control_plane_image" {
-  description = "Optional container image URI override for @sentinel/control-plane service. Defaults to us-central1-docker.pkg.dev/sentinel-release/sentinel/control-plane:v<sentinel_version>. Note: Customer GCP project requires roles/artifactregistry.reader on Sentinel's Artifact Registry (via ./infra/scripts/manage-customer-access.sh grant <PROJECT_NUMBER>)."
+  description = "Optional container image URI override for @sentinel/control-plane service. Defaults to us-central1-docker.pkg.dev/sentinel-saas-prod/sentinel/control-plane:v<sentinel_version>. Note: Customer GCP project requires roles/artifactregistry.reader on Sentinel's Artifact Registry (via ./infra/scripts/manage-customer-access.sh grant <PROJECT_NUMBER>)."
   type        = string
   default     = null
   nullable    = true
@@ -56,7 +56,7 @@ variable "control_plane_image" {
 }
 
 variable "agent_runner_image" {
-  description = "Optional container image URI override for @sentinel/agent-runner Cloud Run Job. Defaults to us-central1-docker.pkg.dev/sentinel-release/sentinel/agent-runner:v<sentinel_version>. Note: Customer GCP project requires roles/artifactregistry.reader on Sentinel's Artifact Registry (via ./infra/scripts/manage-customer-access.sh grant <PROJECT_NUMBER>)."
+  description = "Optional container image URI override for @sentinel/agent-runner Cloud Run Job. Defaults to us-central1-docker.pkg.dev/sentinel-saas-prod/sentinel/agent-runner:v<sentinel_version>. Note: Customer GCP project requires roles/artifactregistry.reader on Sentinel's Artifact Registry (via ./infra/scripts/manage-customer-access.sh grant <PROJECT_NUMBER>)."
   type        = string
   default     = null
   nullable    = true
